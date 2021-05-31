@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 class UssdService {
   static const MethodChannel _channel =
-      MethodChannel("com.vincentkammerer.ussd_service/plugin_channel");
+      MethodChannel('com.vincentkammerer.ussd_service/plugin_channel');
 
   /// Performs the USSD request and returns the response
   static Future<String> makeRequest(
@@ -17,16 +17,15 @@ class UssdService {
   ]) async {
     final String response = await _channel
         .invokeMethod(
-          "makeRequest",
-          {"subscriptionId": subscriptionId, "code": code},
+          'makeRequest',
+          {'subscriptionId': subscriptionId, 'code': code},
         )
         .timeout(timeout)
         .catchError((e) {
-          // TODO: Move timeout handling to Android side once Java 9 is used
           // and `CompletableFuture.timeout` is available
           if (e is TimeoutException) {
             throw PlatformException(
-                code: "ussd_plugin_ussd_execution_timeout", message: e.message);
+                code: 'ussd_plugin_ussd_execution_timeout', message: e.message);
           }
           throw e;
         });
